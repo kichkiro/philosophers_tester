@@ -1,5 +1,5 @@
 # Philosophers Tester
-### <i>[subject](subject/en.subject.pdf) v.10</i>
+### <i>[subject](subject/subject.pdf) v.10</i>
 
 <p align="center">
   <img src="img/header.png"/>
