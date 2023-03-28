@@ -9,7 +9,7 @@
 #### To use the tester, run the following commands:
 ```
 git clone https://github.com/kichkiro/philosophers_tester.git
-python3 -m venv .venv && source .venv/bin/activate && pip3 install -r requirements.txt 
+cd philosophers_tester && python3 -m venv .venv && source .venv/bin/activate && pip3 install -r requirements.txt 
 python3 tester/main.py [project path]
 ```
 
@@ -29,14 +29,14 @@ The tester performs the following tests:
     - check if global variables are present.
 - death_1:
     - test the program with a single philosopher, it should die in the following sequence:
-        - timestamp_in_ms X has taken a fork
+    	- timestamp_in_ms X has taken a fork
 		- timestamp_in_ms X died
 - death_2:
-    - in this test the philosopher should never die, if the tester returns KO, although no philosopher is dead check if:
+    - In this test, no philosopher should die, if the test returns KO, although no philosopher is dead, check if:
 		- no one has eaten more than N times.
 		- you are doing 5 prints for each.
 - death_3:
-    - in this test a philosopher should die, if the tester returns KO, even though a philosopher is dead, check if:
+    - in this test, a philosopher should die, if the test returns KO, even though a philosopher is dead, check if:
 		- no one has eaten more than N times.
 		- you are doing 5 prints for each.
 - Valgrind Memcheck:
