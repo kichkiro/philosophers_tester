@@ -1,13 +1,9 @@
 # Philosophers Tester
 ### <i>[subject](subject/en.subject.pdf) v.10</i>
 
-<br>
-
 <p align="center">
   <img src="img/header.png"/>
 </p>
-
-<br>
 
 # 🗔 - Commands 
 ### To use the tester, run the following commands:
@@ -69,14 +65,10 @@ The tester performs the following tests:
 - Thread Sanitize:
 	- recompile the program with the -fsanitize=thread option, ThreadSanitize is another concurrency error checking tool.
 
-<br>
-
 # 🪲 - Report bugs
 ### Contact me: 
 - Slack: <b>kichkiro</b>
 - E-Mail: <b>kichkiro@student.42firenze.it</b>  
-
-<br>
 
 # ⚖️ - License
 See [LICENSE](LICENSE)
