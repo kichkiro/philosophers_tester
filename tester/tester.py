@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:06:15 by kichkiro          #+#    #+#              #
-#    Updated: 2023/03/29 13:58:47 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/03/29 15:09:28 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,7 +130,7 @@ class Tester:
     def __death_2(self, process, stdout, stderr, args, i):
         if "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
-            print(colored("    No philosopher should die\n\n", "red"))
+            print(colored("    No philosopher should die\n", "red"))
             print(colored(f"    ARGS: {args}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
@@ -138,7 +138,7 @@ class Tester:
     def __death_3(self, process, stdout, stderr, args, i):
         if not "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
-            print(colored("    One philosopher should die\n\n", "red"))
+            print(colored("    One philosopher should die\n", "red"))
             print(colored(f"    ARGS: {args}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))

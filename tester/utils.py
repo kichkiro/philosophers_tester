@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:52:31 by kichkiro          #+#    #+#              #
-#    Updated: 2023/03/29 13:38:12 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/03/29 19:45:50 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -132,9 +132,14 @@ def change_flag(old_flag: str, new_flag: str, project_path: str):
     """
     with open(f"{project_path}/Makefile", 'r+') as f:
         content = f.read()
-        if len(new_flag) < len(old_flag):
-            new_flag += ' ' * (len(old_flag) - len(new_flag))
         new_content = re.sub(old_flag, new_flag, content)
         f.seek(0)
         f.write(new_content)
-        f.close()
+
+    with open(f"{project_path}/Makefile", 'r+') as f:
+        if len(new_flag) < len(old_flag):
+            lines = f.readlines()
+            lines.pop()
+            f.seek(0)
+            f.writelines(lines)
+            f.truncate()

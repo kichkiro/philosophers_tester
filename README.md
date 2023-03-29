@@ -40,7 +40,7 @@ The tester performs the following tests:
 - Valgrind Helgrind:
     - to check for concurrency issues such as, race conditions and deadlocks.
 - Thread Sanitize:
-	- recompile the program with the -fsanitize=thread option, ThreadSanitize is another concurrency error checking tool.
+	- recompile the program with the -fsanitize=thread option. ThreadSanitize is another concurrency error checking tool.
 
 ## 💀 - When must he die?
 ```
