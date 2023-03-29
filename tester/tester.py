@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:06:15 by kichkiro          #+#    #+#              #
-#    Updated: 2023/03/28 21:14:32 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/03/29 13:58:47 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,40 +128,30 @@ class Tester:
             print(colored(f"TEST {i}: OK\n", "green"))
 
     def __death_2(self, process, stdout, stderr, args, i):
-        new_lines = int(args[0]) * int(args[4]) * 5
-        if stdout.decode().count('\n') != new_lines:
+        if "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
-            print(colored(
-				"    No philosopher should die\n\n"
-				"    HINT: If no philosopher died:\n"
-				"        1- Check if no one has eaten more than N times.\n"
-				"        2- Check if you are doing 5 prints for each "
-				"philosopher for\n           N loops.\n", 
-				"red"
-			))
+            print(colored("    No philosopher should die\n\n", "red"))
             print(colored(f"    ARGS: {args}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
     def __death_3(self, process, stdout, stderr, args, i):
-        new_lines = int(args[0]) * int(args[4]) * 5
-        if stdout.decode().count('\n') >= new_lines:
+        if not "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
-            print(colored(
-                "    One philosopher should die\n\n"
-                "    HINT: If one philosopher died:\n"
-                "        1- Check if no one has eaten more than N times.\n"
-                "        2- Check if you are doing 5 prints for each "
-                "philosopher for\n           N loops.\n",
-                "red"
-            ))
+            print(colored("    One philosopher should die\n\n", "red"))
             print(colored(f"    ARGS: {args}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
     def __valgrind(self, process, stdout, stderr, args, i):
         if process.returncode == 1:
-            print(colored(f"TEST {i}: KO\n{stderr.decode('utf-8')}", "red"))
+            for error_line in stderr.decode('utf-8').split("\n"):
+                if "ERROR SUMMARY" in error_line:
+                    print(colored(
+                        f"TEST {i}: KO\n\n    {error_line}\n\n    "
+                        f"ARGS: {args}\n", 
+                        "red"
+                    ))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
@@ -170,7 +160,7 @@ class Tester:
             for error_line in stderr.decode('utf-8').split("\n"):
                 if "warnings" in error_line:
                     print(colored(
-                        f"TEST {i}: KO\n\n    {error_line}\n    "
+                        f"TEST {i}: KO\n\n    {error_line}\n\n    "
                         f"ARGS: {args}\n", 
                         "red"
                     ))

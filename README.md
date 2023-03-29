@@ -32,15 +32,11 @@ The tester performs the following tests:
     	- timestamp_in_ms X has taken a fork
 		- timestamp_in_ms X died
 - death_2:
-    - In this test, no philosopher should die, if the test returns KO, although no philosopher is dead, check if:
-		- no one has eaten more than N times.
-		- you are doing 5 prints for each.
+    - in this test, no philosopher should die.
 - death_3:
-    - in this test, a philosopher should die, if the test returns KO, even though a philosopher is dead, check if:
-		- no one has eaten more than N times.
-		- you are doing 5 prints for each.
+    - in this test, a philosopher should die.
 - Valgrind Memcheck:
-    - check for memory leaks.
+    - to check for memory leaks.
 - Valgrind Helgrind:
     - to check for concurrency issues such as, race conditions and deadlocks.
 - Thread Sanitize:
