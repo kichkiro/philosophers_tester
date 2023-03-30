@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 19:54:33 by kichkiro          #+#    #+#              #
-#    Updated: 2023/03/29 19:47:57 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/03/30 13:29:09 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ from termcolor import colored
 def main():
     # Init -------------------------------------------------------------------->
     
-    utils.header()
+    utils.banner()
     argv = sys.argv
 
     if len(argv) != 2:

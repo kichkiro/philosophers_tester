@@ -1,19 +1,17 @@
-# Philosophers Tester
-#### <i>[subject](subject/subject.pdf) v.10</i>
-
-<p align="center">
-  <img src="img/header.png"/>
-</p>
+<img src="https://github.com/kichkiro/42_cursus/blob/assets/banner_philosophers_tester.png?raw=true" width="100%"/>
 
 ## 🛠️ - How to use? 
 #### To use the tester, run the following commands:
 ```
 git clone https://github.com/kichkiro/philosophers_tester.git
-cd philosophers_tester && python3 -m venv .venv && source .venv/bin/activate && pip3 install -r requirements.txt 
+cd philosophers_tester 
+python3 -m venv .venv 
+source .venv/bin/activate 
+pip3 install -r requirements.txt 
 python3 tester/main.py [project path]
 ```
 
-#### To deactivate virtual env run:
+#### To deactivate virtual environment, run:
 ```
 deactivate
 ```
