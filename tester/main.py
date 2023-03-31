@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 19:54:33 by kichkiro          #+#    #+#              #
-#    Updated: 2023/04/01 01:14:57 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/04/01 01:19:00 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,18 +24,19 @@ from termcolor import colored
 def main():
     # Init -------------------------------------------------------------------->
     
-    utils.banner()
     argv = sys.argv
     project_path = os.path.abspath(argv[1])
     exe = os.path.basename(project_path)
 
     if len(argv) != 2:
-        print(colored("Wrong input arguments...\n", "red", attrs=["bold"]))
+        print(colored("\nWrong input arguments...\n", "red", attrs=["bold"]))
         print(colored("[project_path]\n", "white"))
         exit()
     elif exe == "philo_bonus":
-        print(colored("Bonus coming soon!", "blue"))
+        print(colored("\nBonus coming soon!", "blue"))
         exit()
+
+    utils.banner()
 
     death_1 = Tester(project_path, exe, "death_1")
     death_2 = Tester(project_path, exe, "death_2")
