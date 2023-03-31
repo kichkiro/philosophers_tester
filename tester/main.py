@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 19:54:33 by kichkiro          #+#    #+#              #
-#    Updated: 2023/04/01 00:44:02 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/04/01 01:14:57 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ def main():
     if len(argv) != 2:
         print(colored("Wrong input arguments...\n", "red", attrs=["bold"]))
         print(colored("[project_path]\n", "white"))
+        exit()
+    elif exe == "philo_bonus":
+        print(colored("Bonus coming soon!", "blue"))
         exit()
 
     death_1 = Tester(project_path, exe, "death_1")
