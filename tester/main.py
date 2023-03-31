@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/12 19:54:33 by kichkiro          #+#    #+#              #
-#    Updated: 2023/03/30 13:29:09 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/04/01 00:44:02 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,20 +26,20 @@ def main():
     
     utils.banner()
     argv = sys.argv
+    project_path = os.path.abspath(argv[1])
+    exe = os.path.basename(project_path)
 
     if len(argv) != 2:
         print(colored("Wrong input arguments...\n", "red", attrs=["bold"]))
         print(colored("[project_path]\n", "white"))
         exit()
 
-    project_path = os.path.abspath(argv[1])
-
-    death_1 = Tester(project_path, "death_1")
-    death_2 = Tester(project_path, "death_2")
-    death_3 = Tester(project_path, "death_3")
-    valgrind_memcheck = Tester(project_path, "valgrind_memcheck")
-    valgrind_helgrind = Tester(project_path, "valgrind_helgrind")
-    thread_sanitizer = Tester(project_path, "thread_sanitizer")
+    death_1 = Tester(project_path, exe, "death_1")
+    death_2 = Tester(project_path, exe, "death_2")
+    death_3 = Tester(project_path, exe, "death_3")
+    valgrind_memcheck = Tester(project_path, exe, "valgrind_memcheck")
+    valgrind_helgrind = Tester(project_path, exe, "valgrind_helgrind")
+    thread_sanitizer = Tester(project_path, exe, "thread_sanitizer")
 
     # PRE-TEST ---------------------------------------------------------------->
     

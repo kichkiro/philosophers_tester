@@ -6,7 +6,7 @@
 #    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:06:15 by kichkiro          #+#    #+#              #
-#    Updated: 2023/03/29 15:09:28 by kichkiro         ###   ########.fr        #
+#    Updated: 2023/04/01 00:36:45 by kichkiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,21 +48,21 @@ class Tester:
     __thread_sanitizer(process, stdout, stderr, args, i):
         Runs the project with ThreadSanitizer.
     """
-    def __init__(self, project_path: str, test: str) -> None:
+    def __init__(self, project_path: str, exe: str, test: str) -> None:
         self.project_path = project_path
         if test == "death_1":
             self.test_file = "tester/test/death_1"
-            self.cmd = [f"{project_path}/philo"]
+            self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
             	self.__death_1(process, stdout, stderr, args, i)
         elif test == "death_2":
             self.test_file = "tester/test/death_2"
-            self.cmd = [f"{project_path}/philo"]
+            self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__death_2(process, stdout, stderr, args, i)
         elif test == "death_3":
             self.test_file = "tester/test/death_3"
-            self.cmd = [f"{project_path}/philo"]
+            self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__death_3(process, stdout, stderr, args, i)
         elif test == "valgrind_memcheck":
@@ -72,7 +72,7 @@ class Tester:
                 "--tool=memcheck",
                 "--leak-check=full",
             	"--error-exitcode=1",
-                f"{project_path}/philo"
+                f"{project_path}/{exe}"
             ]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__valgrind(process, stdout, stderr, args, i)
@@ -82,13 +82,13 @@ class Tester:
                 "valgrind",
                 "--tool=helgrind",
             	"--error-exitcode=1",
-                f"{project_path}/philo"
+                f"{project_path}/{exe}"
             ]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__valgrind(process, stdout, stderr, args, i)
         elif test == "thread_sanitizer":
             self.test_file = "tester/test/other"
-            self.cmd = [f"{project_path}/philo"]
+            self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__thread_sanitizer(process, stdout, stderr, args, i)
 
@@ -109,7 +109,7 @@ class Tester:
                 process.send_signal(signal.SIGINT)
                 print(colored(
                     f"TEST {i}: KO\n\n    Deadlock detected\n\n    "
-                    f"ARGS: {args}\n", 
+                    f"ARGS: {' '.join(args)}\n", 
                     "red"
                 ))
             i += 1
@@ -123,7 +123,7 @@ class Tester:
 				"    2- \"timestamp_in_ms X died\"\n",
 				"red"
 			))
-            print(colored(f"    ARGS: {args}\n", "red"))
+            print(colored(f"    ARGS: {' '.join(args)}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
@@ -131,7 +131,7 @@ class Tester:
         if "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
             print(colored("    No philosopher should die\n", "red"))
-            print(colored(f"    ARGS: {args}\n", "red"))
+            print(colored(f"    ARGS: {' '.join(args)}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
@@ -139,7 +139,7 @@ class Tester:
         if not "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
             print(colored("    One philosopher should die\n", "red"))
-            print(colored(f"    ARGS: {args}\n", "red"))
+            print(colored(f"    ARGS: {' '.join(args)}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
@@ -149,7 +149,7 @@ class Tester:
                 if "ERROR SUMMARY" in error_line:
                     print(colored(
                         f"TEST {i}: KO\n\n    {error_line}\n\n    "
-                        f"ARGS: {args}\n", 
+                        f"ARGS: {' '.join(args)}\n", 
                         "red"
                     ))
         else:
@@ -161,7 +161,7 @@ class Tester:
                 if "warnings" in error_line:
                     print(colored(
                         f"TEST {i}: KO\n\n    {error_line}\n\n    "
-                        f"ARGS: {args}\n", 
+                        f"ARGS: {' '.join(args)}\n", 
                         "red"
                     ))
         else:
