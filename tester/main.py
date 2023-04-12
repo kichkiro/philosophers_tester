@@ -27,14 +27,16 @@ def main():
     # Init ------------------------------------------------------------------->
     
     argv = sys.argv
-    project_path = os.path.abspath(argv[1])
-    exe = os.path.basename(project_path)
 
     if len(argv) != 2:
         print(colored("\nWrong input arguments...\n", "red", attrs=["bold"]))
         print(colored("[project_path]\n", "white"))
         exit()
-    elif exe == "philo_bonus":
+
+    project_path = os.path.abspath(argv[1])
+    exe = os.path.basename(project_path)
+    
+    if exe == "philo_bonus":
         print(colored("\nBonus coming soon!", "blue"))
         exit()
 

@@ -11,6 +11,7 @@ import signal
 import subprocess
 
 from termcolor import colored
+import args
 
 # Authorship ----------------------------------------------------------------->
 
@@ -54,22 +55,22 @@ class Tester:
     def __init__(self, project_path: str, exe: str, test: str) -> None:
         self.project_path = project_path
         if test == "death_1":
-            self.test_file = "tester/test/death_1"
+            self.args = args.death_1
             self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
             	self.__death_1(process, stdout, stderr, args, i)
         elif test == "death_2":
-            self.test_file = "tester/test/death_2"
+            self.args = args.death_2
             self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__death_2(process, stdout, stderr, args, i)
         elif test == "death_3":
-            self.test_file = "tester/test/death_3"
+            self.args = args.death_3
             self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__death_3(process, stdout, stderr, args, i)
         elif test == "valgrind_memcheck":
-            self.test_file = "tester/test/other"
+            self.args = args.other
             self.cmd = [
                 "valgrind",
                 "--tool=memcheck",
@@ -80,7 +81,7 @@ class Tester:
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__valgrind(process, stdout, stderr, args, i)
         elif test == "valgrind_helgrind":
-            self.test_file = "tester/test/other"
+            self.args = args.other
             self.cmd = [
                 "valgrind",
                 "--tool=helgrind",
@@ -90,7 +91,7 @@ class Tester:
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__valgrind(process, stdout, stderr, args, i)
         elif test == "thread_sanitizer":
-            self.test_file = "tester/test/other"
+            self.args = args.other
             self.cmd = [f"{project_path}/{exe}"]
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__thread_sanitizer(process, stdout, stderr, args, i)
@@ -98,9 +99,9 @@ class Tester:
 
     def run(self):
         i = 0
-        for line in open(self.test_file, 'r'):
-            args = line.split()
-            timeout = int(args[0]) * (int(args[1]) / 1000) * int(args[4]) * 1.5
+        for args in self.args:
+            timeout = args[0] * (args[1] / 1000) * args[4] * 1.5
+            args = [str(arg) for arg in args]
             process = subprocess.Popen(
                 self.cmd + args,
                 stdout=subprocess.PIPE, 
