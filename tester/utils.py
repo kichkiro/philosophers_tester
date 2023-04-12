@@ -6,8 +6,9 @@ A set of utils functions.
 
 # Libraries ------------------------------------------------------------------>
 
-import os
 import re
+import os
+import shutil
 import subprocess
 
 from termcolor import colored
@@ -137,16 +138,22 @@ def change_flag(old_flag: str, new_flag: str, project_path: str):
     Returns:
         None
     """
-    with open(f"{project_path}/Makefile", 'r+') as f:
-        content = f.read()
-        new_content = re.sub(old_flag, new_flag, content)
-        f.seek(0)
-        f.write(new_content)
+    temp_path = os.path.join(project_path, "Makefile.temp")
+    shutil.copy2(os.path.join(project_path, "Makefile"), temp_path)
 
-    with open(f"{project_path}/Makefile", 'r+') as f:
-        if len(new_flag) < len(old_flag):
-            lines = f.readlines()
-            lines.pop()
-            f.seek(0)
-            f.writelines(lines)
-            f.truncate()
+    try:
+        with open(temp_path, 'r') as f, open(
+            os.path.join(project_path, "Makefile"), 'w') as g:
+            for line in f:
+                if old_flag in line:
+                    line = re.sub(old_flag, new_flag, line)
+                g.write(line)
+    except Exception as e:
+        print(colored(
+            f"Error occurred while modifying Makefile: {e}",
+            "red"
+        ))
+        shutil.copy2(temp_path, os.path.join(project_path, "Makefile"))
+    else:
+        os.remove(temp_path)
+

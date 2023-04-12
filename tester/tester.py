@@ -122,32 +122,39 @@ class Tester:
 
     def __death_1(self, process, stdout, stderr, args, i):
         if stdout.decode().count('\n') != 2:
-            print(colored(f"TEST {i}: KO\n", "red"))
             print(colored(
+                f"TEST {i}: KO\n\n"
 				"    When is only 1 philo, he must die in this sequence:\n"
 				"    1- \"timestamp_in_ms X has taken a fork\"\n"
-				"    2- \"timestamp_in_ms X died\"\n",
+				"    2- \"timestamp_in_ms X died\"\n\n"
+                f"    ARGS: {' '.join(args)}\n",
 				"red"
 			))
-            print(colored(f"    ARGS: {' '.join(args)}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
 
     def __death_2(self, process, stdout, stderr, args, i):
         if "died" in stdout.decode():
-            print(colored(f"TEST {i}: KO\n", "red"))
-            print(colored("    No philosopher should die\n", "red"))
-            print(colored(f"    ARGS: {' '.join(args)}\n", "red"))
+            print(colored(
+                f"TEST {i}: KO\n\n"
+                "    No philosopher should die.\n\n"
+                f"    ARGS: {' '.join(args)}\n",
+                "red"
+            ))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
 
     def __death_3(self, process, stdout, stderr, args, i):
         if not "died" in stdout.decode():
-            print(colored(f"TEST {i}: KO\n", "red"))
-            print(colored("    One philosopher should die\n", "red"))
-            print(colored(f"    ARGS: {' '.join(args)}\n", "red"))
+            print(colored(
+                f"TEST {i}: KO\n\n"
+                "    One philosopher should die.\n\n"
+                "    HINT: The tester looks for the word 'died' in stdout.\n\n"
+                f"    ARGS: {' '.join(args)}\n",
+                "red"
+            ))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
