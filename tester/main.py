@@ -1,28 +1,30 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    main.py                                            :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/12 19:54:33 by kichkiro          #+#    #+#              #
-#    Updated: 2023/04/01 01:19:00 by kichkiro         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#!/usr/bin/python3
 
-# Libraries ------------------------------------------------------------------->
+"""
+Tester for the Philosophers project of school 42.
+"""
+
+# Libraries ------------------------------------------------------------------>
 
 import os
 import sys
 
+from termcolor import colored
 import utils
 from tester import Tester
-from termcolor import colored
 
-# Main Functions -------------------------------------------------------------->
+# Authorship ----------------------------------------------------------------->
+
+__author__ = "Kirill Chkirov"
+__license__ = "other"
+__email__ = "kichkiro@student.42firenze.it"
+__slack__ = "kichkiro"
+__status__ = "Development"
+
+# Functions ------------------------------------------------------------------>
 
 def main():
-    # Init -------------------------------------------------------------------->
+    # Init ------------------------------------------------------------------->
     
     argv = sys.argv
     project_path = os.path.abspath(argv[1])
@@ -45,20 +47,20 @@ def main():
     valgrind_helgrind = Tester(project_path, exe, "valgrind_helgrind")
     thread_sanitizer = Tester(project_path, exe, "thread_sanitizer")
 
-    # PRE-TEST ---------------------------------------------------------------->
+    # PRE-TEST --------------------------------------------------------------->
     
     print(colored(
-        "PRE-TEST ----------------------------------------------------------->"
+        "PRE-TEST ---------------------------------------------------------->"
         "\n", "white", attrs=["bold"]))
 
     utils.makefile("", True, project_path)
     utils.norminette(project_path)
     utils.global_finder(project_path)
     
-    # DEATH TEST - One Philo -------------------------------------------------->
+    # DEATH TEST - One Philo ------------------------------------------------->
 
     print(colored(
-        "DEATH TEST --------------------------------------------------------->",
+        "DEATH TEST -------------------------------------------------------->",
         "white", 
         attrs=["bold"]
     ))
@@ -66,10 +68,10 @@ def main():
 
     death_1.run()
 
-    # DEATH TEST - No one must die -------------------------------------------->
+    # DEATH TEST - No one must die ------------------------------------------->
 
     print(colored(
-        "DEATH TEST --------------------------------------------------------->",
+        "DEATH TEST -------------------------------------------------------->",
         "white", 
         attrs=["bold"]
     ))
@@ -77,10 +79,10 @@ def main():
 
     death_2.run()
 
-    # DEATH TEST - One must die ----------------------------------------------->
+    # DEATH TEST - One must die ---------------------------------------------->
 
     print(colored(
-        "DEATH TEST --------------------------------------------------------->",
+        "DEATH TEST -------------------------------------------------------->",
         "white", 
         attrs=["bold"]
     ))
@@ -88,10 +90,10 @@ def main():
 
     death_3.run()
 
-    # VALGRIND --tool=memcheck ------------------------------------------------>
+    # VALGRIND --tool=memcheck ----------------------------------------------->
 
     print(colored(
-        "VALGRIND ----------------------------------------------------------->",
+        "VALGRIND ---------------------------------------------------------->",
         "white", 
         attrs=["bold"]
     ))
@@ -99,10 +101,10 @@ def main():
 
     valgrind_memcheck.run()
 
-    # VALGRIND --tool=helgrind ------------------------------------------------>
+    # VALGRIND --tool=helgrind ----------------------------------------------->
 
     print(colored(
-        "VALGRIND ----------------------------------------------------------->",
+        "VALGRIND ---------------------------------------------------------->",
         "white", 
         attrs=["bold"]
     ))
@@ -110,10 +112,10 @@ def main():
     
     valgrind_helgrind.run()
 
-    # ThreadSanitizer --------------------------------------------------------->
+    # ThreadSanitizer -------------------------------------------------------->
     
     print(colored(
-        "ThreadSanitizer ---------------------------------------------------->"
+        "ThreadSanitizer --------------------------------------------------->"
         '\n',
         "white", 
         attrs=["bold"]

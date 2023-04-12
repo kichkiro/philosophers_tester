@@ -1,16 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    utils.py                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/28 19:52:31 by kichkiro          #+#    #+#              #
-#    Updated: 2023/03/30 13:29:12 by kichkiro         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#!/usr/bin/python3
 
-# Libraries ------------------------------------------------------------------->
+"""
+A set of utils functions.
+"""
+
+# Libraries ------------------------------------------------------------------>
 
 import os
 import re
@@ -18,30 +12,39 @@ import subprocess
 
 from termcolor import colored
 
-# Functions ------------------------------------------------------------------->
+# Authorship ----------------------------------------------------------------->
+
+__author__ = "Kirill Chkirov"
+__license__ = "other"
+__email__ = "kichkiro@student.42firenze.it"
+__slack__ = "kichkiro"
+__status__ = "Development"
+
+# Functions ------------------------------------------------------------------>
 
 def banner():
     """
-    Print a formatted header with ASCII art
+    Print a formatted banner with ASCII art.
     
     Returns:
         None
     """
     print(colored(
-        "    ____  __    _ __                       __                      \n"
-        "   / __ \/ /_  (_) /___  _________  ____  / /_  ___  __________    \n"
-        "  / /_/ / __ \/ / / __ \/ ___/ __ \/ __ \/ __ \/ _ \/ ___/ ___/    \n"
-        " / ____/ / / / / / /_/ (__  ) /_/ / /_/ / / / /  __/ /  (__  )     \n"
-        "/_/   /_/ /_/_/_/\____/____/\____/ .___/_/ /_/\___/_/  /____/      \n"
-        "   ______         __            /_/                                \n"
-        "  /_  _ /_  _____/ /____  _____                                    \n"
-        "  / / / _ \/ ___/ __/ _ \/ ___/                                    \n"
-        " / / /  __(__  ) /_/  __/ /                                        \n"
-        "/_/  \___/____/\__/\___/_/                                       \n\n"
-        "Will you die in the right way?                                     \n",
+        "    ____  __    _ __                       __                     \n"
+        "   / __ \/ /_  (_) /___  _________  ____  / /_  ___  __________   \n"
+        "  / /_/ / __ \/ / / __ \/ ___/ __ \/ __ \/ __ \/ _ \/ ___/ ___/   \n"
+        " / ____/ / / / / / /_/ (__  ) /_/ / /_/ / / / /  __/ /  (__  )    \n"
+        "/_/   /_/ /_/_/_/\____/____/\____/ .___/_/ /_/\___/_/  /____/     \n"
+        "   ______         __            /_/                               \n"
+        "  /_  _ /_  _____/ /____  _____                                   \n"
+        "  / / / _ \/ ___/ __/ _ \/ ___/                                   \n"
+        " / / /  __(__  ) /_/  __/ /                                       \n"
+        "/_/  \___/____/\__/\___/_/                                      \n\n"
+        "Will you die in the right way?                                    \n",
         "yellow",
         attrs=["bold"]
     ))
+
 
 def makefile(rules: str, must_print: bool, project_path: str):
     """
@@ -74,6 +77,7 @@ def makefile(rules: str, must_print: bool, project_path: str):
         print(colored(f"Make: KO!\n\n    {make_error.decode('utf-8')}", "red"))
         exit(1)
 
+
 def norminette(project_path: str):
     """
     Run the norminette command on a given project path.
@@ -94,6 +98,7 @@ def norminette(project_path: str):
         print(colored("Norminette: OK\n", "green"))
     else:
         print(colored("Norminette: Error!\n", "red"))
+
 
 def global_finder(dir):
     """
@@ -118,9 +123,11 @@ def global_finder(dir):
     else:
         print(colored(f"Global Var: {global_var}\n", "green"))
 
+
 def change_flag(old_flag: str, new_flag: str, project_path: str):
     """
-    Replaces the old flag with the new flag in the Makefile of a project.
+    Replaces the old flag with the new flag in the Makefile of a 
+    project.
 
     Args:
         old_flag (str): The flag to be replaced.

@@ -1,44 +1,46 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    tester.py                                          :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kichkiro <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/28 19:06:15 by kichkiro          #+#    #+#              #
-#    Updated: 2023/04/01 01:16:30 by kichkiro         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#!/usr/bin/python3
 
-# Libraries ------------------------------------------------------------------->
+"""
+A class to run a set of tests on a given project and evaluate the 
+results.
+"""
+
+# Libraries ------------------------------------------------------------------>
 
 import signal
 import subprocess
 
 from termcolor import colored
 
-# Functions ------------------------------------------------------------------->
+# Authorship ----------------------------------------------------------------->
+
+__author__ = "Kirill Chkirov"
+__license__ = "other"
+__email__ = "kichkiro@student.42firenze.it"
+__slack__ = "kichkiro"
+__status__ = "Development"
+
+# Functions ------------------------------------------------------------------>
 
 class Tester:
     """
-    A class to run a set of tests on a given project and evaluate the results.
-
     Attributes
-    ----------------------------------------------------------------------------
+    --------------------------------------------------------------------
     project_path : str
         The path to the project to be tested.
     test : str
         The name of the test to run.
 
     Methods
-    ----------------------------------------------------------------------------
+    --------------------------------------------------------------------
     run():
         Runs the test cases and prints the results.
 
     Private Methods
-    ----------------------------------------------------------------------------
+    --------------------------------------------------------------------
     __death_1(process, stdout, stderr, args, i):
-        Checks if only one philosopher is alive and died in a specific sequence.
+        Checks if only one philosopher is alive and died in a specific 
+        sequence.
     __death_2(process, stdout, stderr, args, i):
         Checks if no philosopher has died.
     __death_3(process, stdout, stderr, args, i):
@@ -48,6 +50,7 @@ class Tester:
     __thread_sanitizer(process, stdout, stderr, args, i):
         Runs the project with ThreadSanitizer.
     """
+    
     def __init__(self, project_path: str, exe: str, test: str) -> None:
         self.project_path = project_path
         if test == "death_1":
@@ -92,6 +95,7 @@ class Tester:
             self.test = lambda process, stdout, stderr, args, i: \
                 self.__thread_sanitizer(process, stdout, stderr, args, i)
 
+
     def run(self):
         i = 0
         for line in open(self.test_file, 'r'):
@@ -114,6 +118,7 @@ class Tester:
                 ))
             i += 1
 
+
     def __death_1(self, process, stdout, stderr, args, i):
         if stdout.decode().count('\n') != 2:
             print(colored(f"TEST {i}: KO\n", "red"))
@@ -127,6 +132,7 @@ class Tester:
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
+
     def __death_2(self, process, stdout, stderr, args, i):
         if "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
@@ -135,6 +141,7 @@ class Tester:
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
 
+
     def __death_3(self, process, stdout, stderr, args, i):
         if not "died" in stdout.decode():
             print(colored(f"TEST {i}: KO\n", "red"))
@@ -142,6 +149,7 @@ class Tester:
             print(colored(f"    ARGS: {' '.join(args)}\n", "red"))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
+
 
     def __valgrind(self, process, stdout, stderr, args, i):
         if process.returncode == 1:
@@ -154,6 +162,7 @@ class Tester:
                     ))
         else:
             print(colored(f"TEST {i}: OK\n", "green"))
+
 
     def __thread_sanitizer(self, process, stdout, stderr, args, i):
         if process.returncode != 0:
