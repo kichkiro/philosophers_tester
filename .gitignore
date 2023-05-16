@@ -2,4 +2,4 @@
 .venv
 
 # cache
-tester/__pycache__
+src/__pycache__
