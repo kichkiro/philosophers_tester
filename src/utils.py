@@ -6,10 +6,11 @@ A set of utils functions.
 
 # Libraries ------------------------------------------------------------------>
 
-import re
 import os
+import re
 import shutil
 import subprocess
+import sys
 
 from termcolor import colored
 
@@ -23,12 +24,18 @@ __status__ = "Development"
 
 # Functions ------------------------------------------------------------------>
 
-def banner():
+
+def banner() -> None:
     """
     Print a formatted banner with ASCII art.
-    
-    Returns:
-        None
+
+    Params
+    --------------------------------------------------------------------
+    None
+
+    Returns
+    --------------------------------------------------------------------
+    None
     """
     print(colored(
         "    ____  __    _ __                       __                     \n"
@@ -47,51 +54,64 @@ def banner():
     ))
 
 
-def makefile(rules: str, must_print: bool, project_path: str):
+def makefile(rules: str, must_print: bool, project_path: str) -> None:
     """
     Run the make command with specified rules on a given project path.
-    
-    Args:
-    	rules (str): The makefile rules to run.
-    	must_print (bool): Whether to print output or not.
-    	project_path (str): The path to the project directory.
 
-	Returns:
-        None
+    Params
+    --------------------------------------------------------------------
+    rules : str
+        The makefile rules to run.
+    must_print : bool
+        Whether to print output or not.
+    project_path : str
+        The path to the project directory.
+
+    Returns
+    --------------------------------------------------------------------
+    None
     """
+    process: subprocess.Popen
+    make_error: bytes
+
     if rules != "":
         process = subprocess.Popen(
-            ["make", rules, "-C", project_path], 
-            stdout=subprocess.PIPE, 
+            ["make", rules, "-C", project_path],
+            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
     else:
         process = subprocess.Popen(
-            ["make", "-C", project_path], 
-            stdout=subprocess.PIPE, 
+            ["make", "-C", project_path],
+            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-    make_output, make_error = process.communicate()
+    _, make_error = process.communicate()
     if not process.returncode and must_print:
         print(colored("Make: OK\n", "green",))
     elif process.returncode:
         print(colored(f"Make: KO!\n\n    {make_error.decode('utf-8')}", "red"))
-        exit(1)
+        sys.exit(1)
 
 
-def norminette(project_path: str):
+def norminette(project_path: str) -> None:
     """
     Run the norminette command on a given project path.
-    
-    Args:
-    	project_path (str): The path to the project directory.
 
-	Returns:
-        None
+    Params
+    --------------------------------------------------------------------
+    project_path : str
+        The path to the project directory.
+
+    Returns
+    --------------------------------------------------------------------
+    None
     """
+    process: subprocess.Popen
+
     process = subprocess.Popen(
         ["norminette", project_path],
-        stdout=subprocess.PIPE, 
+        stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
     process.communicate()
@@ -101,23 +121,29 @@ def norminette(project_path: str):
         print(colored("Norminette: Error!\n", "red"))
 
 
-def global_finder(dir):
+def global_finder(directory: str) -> None:
     """
-    Find the number of global variables in a given directory and its 
+    Find the number of global variables in a given directory and its
     subdirectories.
-    
-    Args:
-    	dir (str): The directory to search in.
-    
-    Returns:
-        None
+
+    Params
+    --------------------------------------------------------------------
+    directory : str
+        The directory to search in.
+
+    Returns
+    --------------------------------------------------------------------
+    None
     """
+    global_var: int
+
     global_var = 0
-    for root, dirs, files in os.walk(dir):
+    for root, _, files in os.walk(directory):
         for file in files:
             if file.endswith((".c", ".h")):
-                with open(os.path.join(root, file), 'r') as f:
-                    if "g_" in f.read():
+                with open(os.path.join(root, file), "r", encoding="utf-8")\
+                        as file:
+                    if "g_" in file.read():
                         global_var += 1
     if global_var:
         print(colored(f"Global Var: {global_var}\n", "red"))
@@ -125,35 +151,42 @@ def global_finder(dir):
         print(colored(f"Global Var: {global_var}\n", "green"))
 
 
-def change_flag(old_flag: str, new_flag: str, project_path: str):
+def change_flag(old_flag: str, new_flag: str, project_path: str) -> None:
     """
-    Replaces the old flag with the new flag in the Makefile of a 
+    Replaces the old flag with the new flag in the Makefile of a
     project.
 
-    Args:
-        old_flag (str): The flag to be replaced.
-        new_flag (str): The new flag that will replace the old one.
-        project_path (str): The path to the project directory.
+    Params
+    --------------------------------------------------------------------
+    old_flag : str
+        The flag to be replaced.
+    new_flag : str
+        The new flag that will replace the old one.
+    project_path : str
+        The path to the project directory.
 
-    Returns:
-        None
+    Returns
+    --------------------------------------------------------------------
+    None
     """
+    temp_path: str
+
     temp_path = os.path.join(project_path, "Makefile.temp")
     shutil.copy2(os.path.join(project_path, "Makefile"), temp_path)
 
     try:
-        with open(temp_path, 'r') as f, open(
-            os.path.join(project_path, "Makefile"), 'w') as g:
-            for line in f:
+        with open(temp_path, "r", encoding="utf-8") as file, open(
+                os.path.join(project_path, "Makefile"), "w", encoding="utf-8")\
+                as file2:
+            for line in file:
                 if old_flag in line:
                     line = re.sub(old_flag, new_flag, line)
-                g.write(line)
-    except Exception as e:
+                file2.write(line)
+    except Exception as err:
         print(colored(
-            f"Error occurred while modifying Makefile: {e}",
+            f"Error occurred while modifying Makefile: {err}",
             "red"
         ))
         shutil.copy2(temp_path, os.path.join(project_path, "Makefile"))
     else:
         os.remove(temp_path)
-

@@ -1,19 +1,18 @@
 <img src="https://github.com/kichkiro/42_cursus/blob/assets/banner_philosophers_tester.png?raw=true" width="100%"/>
 
-## 🛠️ - How to use? 
-#### To use the tester, run the following commands:
-```
+## 🛠️ - How to use?
+
+#### First time
+```bash
 git clone https://github.com/kichkiro/philosophers_tester.git
 cd philosophers_tester 
-python3 -m venv .venv 
-source .venv/bin/activate 
 pip3 install -r requirements.txt 
-python3 tester/main.py [project path]
+python3 src/__main.py__ [project path]
 ```
 
-#### To deactivate virtual environment, run:
-```
-deactivate
+#### Next times
+```bash
+python3 src/__main.py__ [project path]
 ```
 
 ## 📈 - How does it work?
