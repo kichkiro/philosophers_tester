@@ -7,12 +7,12 @@
 git clone https://github.com/kichkiro/philosophers_tester.git
 cd philosophers_tester 
 pip3 install -r requirements.txt 
-python3 src/__main.py__ [project path]
+python3 src/__main__.py [project path]
 ```
 
 #### Next times
 ```bash
-python3 src/__main.py__ [project path]
+python3 src/__main__.py [project path]
 ```
 
 ## 📈 - How does it work?
