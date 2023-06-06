@@ -21,8 +21,7 @@ __status__ = "Development"
 death_1: List[List[int]]
 death_2: List[List[int]]
 death_3: List[List[int]]
-valgrind: List[List[int]]
-thread_sanitizer: List[List[int]]
+other: List[List[int]]
 
 death_1 = [
     [1, 120, 60, 60, 5, ],
