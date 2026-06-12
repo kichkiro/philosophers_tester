@@ -1,4 +1,4 @@
-<img src="https://github.com/kichkiro/kichkiro/blob/main/assets/banner_philosophers_tester.png?raw=true" width="100%"/>
+<img src="https://github.com/kichkiro/kichkiro/blob/main/assets/banners/banner_philosophers_tester.png?raw=true" width="100%"/>
 
 ## 🛠️ - How to use?
 
